@@ -10,6 +10,38 @@ module "vpc" {
   common_tags          = var.common_tags
 }
 
+
+
+module "eks" {
+  source = "../../modules/eks"
+
+  cluster_name    = var.cluster_name
+  cluster_version = var.cluster_version
+
+  vpc_id             = module.vpc.vpc_id
+  private_subnet_ids = module.vpc.private_subnet_ids
+
+  cluster_endpoint_public_access  = var.cluster_endpoint_public_access
+  cluster_endpoint_private_access = var.cluster_endpoint_private_access
+
+  node_instance_types = var.node_instance_types
+  desired_size        = var.desired_size
+  min_size            = var.min_size
+  max_size            = var.max_size
+
+  addon_names        = var.addon_names
+  storage_class_name = var.storage_class_name
+  storage_type       = var.storage_type
+
+  common_tags = var.common_tags
+}
+
+
+
+
+
+
+
 module "rds" {
   source = "../../modules/rds"
 

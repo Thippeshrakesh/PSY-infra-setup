@@ -1,7 +1,7 @@
 resource "aws_eks_cluster" "this" {
-  name     = "${var.project_name}-eks"
-  role_arn = aws_iam_role.eks_cluster_role.arn
+  name     = var.cluster_name
   version  = var.cluster_version
+  role_arn = aws_iam_role.eks_cluster_role.arn
 
   vpc_config {
     subnet_ids              = var.private_subnet_ids
@@ -10,7 +10,5 @@ resource "aws_eks_cluster" "this" {
     security_group_ids      = [aws_security_group.eks_cluster_sg.id]
   }
 
-  depends_on = [
-    aws_iam_role_policy_attachment.cluster_policy
-  ]
+  tags = var.common_tags
 }
